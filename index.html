@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+  <button id="tableBtn">Table</button>
+  <button id="col6Btn">2 col layout</button>
+  <input type='file' onchange="readImg(this);" />
+  <input type='file' onchange="readVideo(this);" />
+  <button onclick="document.execCommand('bold', false, ''); " >
+    Жирный
+    </button>
+    <button onclick="document.execCommand('italic', false, ''); " >
+      Курсивный
+      </button>
+      <button onclick="document.execCommand('justifyLeft', false, ''); " ><!--Выравание слева-->
+        Слева
+    </button>
+    <button onclick="document.execCommand('justifyRight', false, ''); " ><!--Выравание справа-->
+        Справа
+    </button>
+    <button onclick="document.execCommand('justifyCenter', false, ''); " ><!--Выравание по центру-->
+        По центру
+    </button>
+    <button onclick="document.execCommand('justifyFull', false, ''); " ><!--Выравание по всей ширине-->
+        По ширине
+    </button>
+    <label>Цвет текста:</label>
+<input type="color" onchange="document.execCommand ('foreColor', false, this.value);"/><!--Цвет текста-->
+<label>Заливка:</label>
+<input type="color" onchange="document.execCommand ('backColor', false, this.value);"/><!--Цвет фона-->
+<select onchange="document.execCommand ('fontName', false, this.value);"><!--Выбор шрифта-->
+    <option value="Times New Roman">Times New Roman</option>
+    <option value="Arial">Arial</option>
+    <option value="Tahoma">Tahoma</option>
+</select>
+<select onchange="document.execCommand ('fontSize', false, this.value);"><!--Выбор размера от 1-7-->
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+
+</select>
+<button onclick="document.execCommand('underline', false, ''); " ><!--Подчеркивание текста-->
+  <u>текст</u>
+</button>
+<button onclick="document.execCommand('strikeThrough', false, ''); " ><!--Зачеркивание текста-->
+    <s>текст</s>
+</button>
+<button onclick="document.execCommand('superscript', false, ''); " ><!--Верхний индекс-->
+    X<sup>n</sup>
+</button>
+<button onclick="document.execCommand('subscript', false, ''); " ><!--Нижний индекс-->
+    X<sub>n</sub>
+</button>
+  <div class="col-12" style="border:1px solid black; width:100%;" contenteditable="true">
+    
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>
