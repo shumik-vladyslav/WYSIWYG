@@ -1,0 +1,179 @@
+.main-editor-wrap {
+    padding: 10px;
+    min-height: 100vh;
+}
+
+.editor-head {
+    background: #fafafa;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #00000021;
+    padding: 5px;
+    padding-bottom: 0;
+    padding-top: 0;
+    position: sticky;
+    top: 0;
+    z-index: 11;
+}
+.head-conatiner{
+    display: flex;
+    padding-right: 1px;
+    border-right: 1px solid #00000021;
+    margin-right: 5px;
+}
+.head-conatiner:last-child{
+    border-right: none;
+}
+.editor-head button {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    background: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    margin-left: 0;
+    border: none;
+    padding: none;
+    border-radius: 4px;
+}
+.editor-head label {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    background: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    margin-left: 0;
+    border: none;
+    padding: none;
+    border-radius: 4px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.editor-head button:hover {
+    background: #dedede;
+}
+.editor-head label:hover {
+    background: #dedede;
+}
+
+.editor-wrap {
+    border: 1px solid #00000021;
+    border-top: none;
+    width: 100%;
+    min-height: calc(100vh - 76px);
+    outline: none;
+    padding: 10px;
+}
+.editor-wrap:focus{
+    box-shadow: inset 0 0 3px #0008ff87;
+}
+.editor-wrap:hover{
+    box-shadow: inset 0 0 3px #0008ff87;
+}
+.row{
+    margin: 0;
+}
+.image{
+    width: 100%;
+    /* float: right; */
+}
+.video{
+    width: 100%;
+    /* float: right; */
+}
+.col-6 .image{
+    width: 100%;
+}
+.col-6 .video{
+    width: 100%;
+}
+.col-6:hover{
+    outline: 1px solid #dee2e6;
+}
+.pos-r{
+    position: relative;
+}
+.table-constructor{
+    position: absolute;
+    width: 175px;
+    background: white;
+    box-shadow: 1px 2px 4px #00000082;
+    display: none;
+}
+.table-constructor.show{
+    display: block;
+}
+
+.table-constructor .body{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 6px;
+    padding-left: 14px;
+    padding-top: 10px;
+    padding-bottom: 3px;
+}
+.table-constructor .body .item{
+    width: 15px;
+    min-width: 15px;
+    height: 15px;
+    padding: 2px;
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.table-constructor .body .item .inside{
+    width: 13px;
+    min-width: 13px;
+    height: 13px;
+    border: 1px solid #0000004d;
+    border-radius: 2px;
+    pointer-events: none;
+}
+.table-constructor .body .item.active .inside{
+    border: 1px solid #0089ff94;
+    background: #b9d8ff;
+}
+.table-constructor .foot{
+    text-align: center;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #909090;
+    padding: 5px;
+    padding-top: 0;
+}
+select {
+    padding: 2px 35px 2px 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    height: 29px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(assets/chevron-down-solid.svg) 90% / 7px no-repeat #eee;
+    margin: 5px;
+  }
+  
+  /* CAUTION: IE hackery ahead */
+  select::-ms-expand { 
+      display: none; /* remove default arrow on ie10 and ie11 */
+  }
+  
+  /* target Internet Explorer 9 to undo the custom arrow */
+  @media screen and (min-width:0\0) {
+      select {
+          background:none\9;
+          padding: 5px\9;
+      } 
+  }
+  
