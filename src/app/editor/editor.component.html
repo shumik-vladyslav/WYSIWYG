@@ -1,106 +1,134 @@
 <div class="main-editor-wrap">
-    <div class="editor-head">
-      <div class="head-conatiner">
-        <div class="pos-r">
-          <button id="tableBtn" title="Table">
-            <i class="fas fa-table"></i>
-          </button>
-          <div id="tableСonstructor" class="table-constructor">
-            <div id="tableСonstructorBody" class="body">
-            </div>
-            <div class="foot">
-              <span id="rows">0</span> x <span id="cols">0</span>
+  <div class="editor-head">
+    <div class="head-conatiner">
+      <div class="pos-r" (clickOutside)="showTableConstructor = false"
+        (click)="showTableConstructor = !showTableConstructor">
+        <button id="tableBtn" title="Table">
+          <i class="fas fa-table"></i>
+        </button>
+        <div [ngClass]="{'show': showTableConstructor}" class="table-constructor">
+          <div id="tableСonstructorBody" class="body">
+            <div *ngFor="let row of constructorData; let i = index">
+              <div *ngFor="let col of row; let j = index" [id]="'tableСonstructorElement-' + (i + 1) + '-' + (j + 1)"
+                class="item" (click)="generatetable($event)">
+                <div class="inside"></div>
+              </div>
             </div>
           </div>
+          <div class="foot">
+            <span id="rows">0</span> x <span id="cols">0</span>
+          </div>
         </div>
-        <button id="col6Btn" title="2 col layout">
-          <i class="fas fa-columns"></i>
-        </button>
       </div>
-      <div class="head-conatiner">
-        <label title="Upload image">
-          <i class="fas fa-image" style="position: absolute;"></i>
-          <input style="opacity: 0;" type='file' onchange="readImg(this);" />
-        </label>
-        <label title="Upload video">
-          <i class="far fa-file-video" style="position: absolute;"></i>
-          <input style="opacity: 0;" type='file' onchange="readVideo(this);" />
-        </label>
-      </div>
-
-      <div class="head-conatiner">
-        <button title="Bold" onclick="document.execCommand('bold', false, ''); ">
-          <i class="fas fa-bold"></i>
-        </button>
-        <button title="Italic" onclick="document.execCommand('italic', false, ''); ">
-          <i class="fas fa-italic"></i>
-        </button>
-        <button title="Underline" onclick="document.execCommand('underline', false, ''); ">
-          <!--Подчеркивание текста-->
-          <i class="fas fa-underline"></i>
-        </button>
-        <button title="Strike through" onclick="document.execCommand('strikeThrough', false, ''); ">
-          <!--Зачеркивание текста-->
-          <i class="fas fa-strikethrough"></i>
-        </button>
-      </div>
-
-      <div class="head-conatiner">
-        <button title="Super" onclick="document.execCommand('superscript', false, ''); ">
-          <!--Верхний индекс-->
-          <i class="fas fa-superscript"></i>
-        </button>
-        <button title="Sub" onclick="document.execCommand('subscript', false, ''); ">
-          <!--Нижний индекс-->
-          <i class="fas fa-subscript"></i>
-        </button>
-      </div>
-
-      <div class="head-conatiner">
-        <button title="Align left" onclick="document.execCommand('justifyLeft', false, ''); ">
-          <!--Выравание слева-->
-          <i class="fas fa-align-left"></i>
-        </button>
-        <button title="Align right" onclick="document.execCommand('justifyRight', false, ''); ">
-          <!--Выравание справа-->
-          <i class="fas fa-align-right"></i>
-        </button>
-        <button title="Align center" onclick="document.execCommand('justifyCenter', false, ''); ">
-          <!--Выравание по центру-->
-          <i class="fas fa-align-center"></i>
-        </button>
-        <button title="Align justify" onclick="document.execCommand('justifyFull', false, ''); ">
-          <!--Выравание по всей ширине-->
-          <i class="fas fa-align-justify"></i>
-        </button>
-      </div>
-
-      <!-- <label>Цвет текста:</label>
-      <input type="color" onchange="document.execCommand ('foreColor', false, this.value);" /> -->
-      <!--Цвет текста-->
-      <!-- <label>Заливка:</label>
-      <input type="color" onchange="document.execCommand ('backColor', false, this.value);" /> -->
-      <!--Цвет фона-->
-      <div class="head-conatiner">
-        <select onchange="document.execCommand ('fontName', false, this.value);">
-          <!--Выбор шрифта-->
-          <option value="Times New Roman">Times New Roman</option>
-          <option value="Arial">Arial</option>
-          <option value="Tahoma">Tahoma</option>
-        </select>
-        <select onchange="document.execCommand ('fontSize', false, this.value);">
-          <!--Выбор размера от 1-7-->
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-        </select>
-      </div>
+      <button id="col6Btn" title="2 col layout">
+        <i class="fas fa-columns"></i>
+      </button>
     </div>
+    <div class="head-conatiner">
+      <label title="Upload image">
+        <i class="fas fa-image" style="position: absolute;"></i>
+        <input style="opacity: 0;" type='file' (change)="readImg($event)" />
+      </label>
+      <label title="Upload video">
+        <i class="far fa-file-video" style="position: absolute;"></i>
+        <input style="opacity: 0;" type='file' (change)="readVideo($event)" />
+      </label>
+    </div>
+    <div class="head-conatiner">
+      <button [ngClass]="{'active': currentFontWeight}" title="Bold" (click)="currentFontWeight = !currentFontWeight"
+        onclick="document.execCommand('bold', false, '');">
+        <i class="fas fa-bold"></i>
+      </button>
+      <button [ngClass]="{'active': currentItalic}" title="Italic" (click)="currentItalic = !currentItalic"
+        onclick="document.execCommand('italic', false, '');">
+        <i class="fas fa-italic"></i>
+      </button>
+      <button [ngClass]="{'active': currentUnderLine}" title="Underline" (click)="currentUnderLine = !currentUnderLine"
+        onclick="document.execCommand('underline', false, '');">
+        <!--Подчеркивание текста-->
+        <i class="fas fa-underline"></i>
+      </button>
+      <button [ngClass]="{'active': currentStrikeThrough}" title="Strike through"
+        (click)="currentStrikeThrough = !currentStrikeThrough"
+        onclick="document.execCommand('strikeThrough', false, ''); ">
+        <!--Зачеркивание текста-->
+        <i class="fas fa-strikethrough"></i>
+      </button>
+    </div>
+    <div class="head-conatiner">
+      <button [ngClass]="{'active': currentSuperscript}" title="Super"
+        (click)="currentSuperscript = !currentSuperscript" onclick="document.execCommand('superscript', false, ''); ">
+        <!--Верхний индекс-->
+        <i class="fas fa-superscript"></i>
+      </button>
+      <button [ngClass]="{'active': currentSubscript}" title="Sub" (click)="currentSubscript = !currentSubscript"
+        onclick="document.execCommand('subscript', false, ''); ">
+        <!--Нижний индекс-->
+        <i class="fas fa-subscript"></i>
+      </button>
+    </div>
+    <div class="head-conatiner">
+      <button [ngClass]="{'active': currentJustifyLeft}" title="Align left"
+        (click)="currentJustifyLeft = !currentJustifyLeft; currentJustifyRight = false; currentJustifyCenter = false; currentJustifyFull = false;"
+        onclick="document.execCommand('justifyLeft', false, '');">
+        <!--Выравание слева-->
+        <i class="fas fa-align-left"></i>
+      </button>
+      <button [ngClass]="{'active': currentJustifyRight}" title="Align right"
+        (click)="currentJustifyRight = !currentJustifyRight; currentJustifyLeft = false; currentJustifyCenter = false; currentJustifyFull = false;"
+        onclick="document.execCommand('justifyRight', false, '');">
+        <!--Выравание справа-->
+        <i class="fas fa-align-right"></i>
+      </button>
+      <button [ngClass]="{'active': currentJustifyCenter}" title="Align center"
+        (click)="currentJustifyCenter = !currentJustifyCenter; currentJustifyLeft = false; currentJustifyRight = false; currentJustifyFull = false;"
+        onclick="document.execCommand('justifyCenter', false, ''); ">
+        <!--Выравание по центру-->
+        <i class="fas fa-align-center"></i>
+      </button>
+      <button [ngClass]="{'active': currentJustifyFull}" title="Align justify"
+        (click)="currentJustifyFull = !currentJustifyFull; currentJustifyLeft = false; currentJustifyRight = false; currentJustifyCenter = false;"
+        onclick="document.execCommand('justifyFull', false, ''); ">
+        <!--Выравание по всей ширине-->
+        <i class="fas fa-align-justify"></i>
+      </button>
+    </div>
+    <!-- <label>Заливка:</label>
+      <input type="color" onchange="document.execCommand ('backColor', false, this.value);" /> -->
+    <!--Цвет фона-->
+    <div class="head-conatiner">
+      <!--Цвет текста-->
+      <!-- <label></label>
+      <input type="color" onchange="document.execCommand ('foreColor', false, this.value);" /> -->
+      <label title="Text color">
+        <i class="fas fa-font" style="position: absolute; font-size: 16px; top: 4px;"></i>
+        <div class="palette" [ngStyle]="{'background': currentColour}"></div>
+        <input [(ngModel)]="currentColour" style="opacity: 0;" type="color"
+          onchange="document.execCommand ('foreColor', false, this.value);" />
+      </label>
 
-    <div id="editableContainer" class="editor-wrap" contenteditable="true"></div>
-    <button (click)="save()">Save</button>
+      <select [(ngModel)]="currentFontName" onchange="document.execCommand ('fontName', false, this.value);">
+        <!--Выбор шрифта-->
+        <option value="Roboto, sans-serif">Roboto, sans-serif</option>
+        <option value="Arial">Arial</option>
+      </select>
+      <select [(ngModel)]="currentFontSize" onchange="document.execCommand ('fontSize', false, this.value);">
+        <!--Выбор размера от 1-7-->
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+      </select>
+    </div>
   </div>
+
+  <div id="editableContainer" class="editor-wrap" contenteditable="true"></div>
+
+  <div class="save-btn-wrap">
+    <button class="button-primary" (click)="save()">Save</button>
+  </div>
+
+</div>

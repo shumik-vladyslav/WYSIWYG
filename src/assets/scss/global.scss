@@ -1,3 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #666666;
+}
+
 .main-editor-wrap {
     padding: 10px;
     min-height: 100vh;
@@ -59,6 +65,17 @@
     border-radius: 4px;
     cursor: pointer;
     overflow: hidden;
+    position: relative;
+    color: black;
+}
+
+.editor-head label .palette {
+    position: absolute;
+    width: 18px;
+    background: rgb(0, 0, 0);
+    height: 5px;
+    bottom: 4px;
+    left: 6px;
 }
 
 .editor-head button:hover {
@@ -69,11 +86,19 @@
     background: #dedede;
 }
 
+.editor-head button.active {
+    background: #dedede;
+}
+
+.editor-head label.active {
+    background: #dedede;
+}
+
 .editor-wrap {
     border: 1px solid #00000021;
     border-top: none;
     width: 100%;
-    min-height: calc(100vh - 76px);
+    min-height: calc(100vh - 132px);
     outline: none;
     padding: 10px;
 }
@@ -86,34 +111,72 @@
     box-shadow: inset 0 0 3px #0008ff87;
 }
 
-.row {
+.editor-wrap .row {
     margin: 0;
 }
 
-.image {
+.editor-wrap .col-6 {
+    outline: 1px solid #0000000d;
+}
+
+.editor-wrap .image {
     width: 100%;
     /* float: right; */
 }
 
-.video {
+.editor-wrap .video {
+    width: 100%;
+    /* float: right; */
+}
+.editor-wrap .col-6 .content{
+    min-height: 50px;
+}
+.editor-wrap .col-6 .image {
+    width: 100%;
+}
+
+.editor-wrap .col-6 .video {
+    width: 100%;
+}
+
+.editor-wrap p span {
+    line-height: normal;
+}
+
+.editor-wrap p {
+    margin-bottom: 9px;
+    line-height: normal;
+}
+
+.viewer-wrap p {
+    margin-bottom: 9px;
+    line-height: normal;
+}
+
+.viewer-wrap p span {
+    line-height: normal;
+}
+
+.viewer-wrap .image {
     width: 100%;
     /* float: right; */
 }
 
-.col-6 .image {
+.viewer-wrap .video {
+    width: 100%;
+    /* float: right; */
+}
+
+.viewer-wrap .col-6 .image {
     width: 100%;
 }
 
-.col-6 .video {
+.viewer-wrap .col-6 .video {
     width: 100%;
 }
 
-.col-6:hover {
-    outline: 1px solid #dee2e6;
-}
-
-.pos-r {
-    position: relative;
+.viewer-wrap .row {
+    margin: 0;
 }
 
 .table-constructor {
@@ -173,6 +236,40 @@
     padding-top: 0;
 }
 
+.pos-r {
+    position: relative;
+}
+
+.button-primary{
+    min-width: 160px;
+    height: 50px;
+    border-radius: 2px;
+    background-color: #2196f3;
+    font-family: Roboto,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: #ffffff;
+    border: none;
+    outline: none;
+}
+
+.table td, .table th{
+    border: 1px solid #dee2e6 !important;
+}
+.table{
+    margin-top: 10px;
+    margin-bottom: 40px;
+    word-break: break-all;
+}
+
+.table:first-child{
+    margin-top: 0px;
+}
+
 select {
     padding: 2px 35px 2px 5px;
     font-size: 16px;
@@ -181,7 +278,7 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: url(assets/chevron-down-solid.svg) 90% / 7px no-repeat #eee;
+    background: url(../chevron-down-solid.svg) 90% / 7px no-repeat #eee;
     margin: 5px;
 }
 
