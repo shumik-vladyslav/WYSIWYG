@@ -2,6 +2,7 @@ let tableBtn = document.querySelector("#tableBtn");
 let col6Btn = document.querySelector("#col6Btn");
 let tableСonstructor = document.getElementById('tableСonstructor');
 let tableСonstructorBody = document.getElementById('tableСonstructorBody');
+let editableContainer = document.getElementById("editableContainer");
 
 tableBtn.addEventListener("click", showTableСonstructor);
 col6Btn.addEventListener("click", generatecol6);
@@ -40,11 +41,11 @@ tableСonstructorBody.addEventListener("mouseover", function (event) {
 
 for (var i = 1; i <= 10; i++) {
   for (var j = 1; j <= 10; j++) {
-    tableСonstructorBody.innerHTML += '<div onclick="generatetable()" id="tableСonstructorElement-' + i + '-' + j + '" class="item"> <div class="inside"></div> </div>';
+    tableСonstructorBody.innerHTML += '<div onclick="generatetable(this)" id="tableСonstructorElement-' + i + '-' + j + '" class="item"> <div class="inside"></div> </div>';
   }
 }
 
-function generatetable() {
+function generatetable(el) {
   event.stopPropagation();
 
   var table = `<table class="table table-bordered">`;
@@ -65,9 +66,34 @@ function generatetable() {
 
   console.log(table);
 
+  editableContainer.focus();
+
+  var placeCaretAtStart = createCaretPlacer(false);
+
+
   document.execCommand("insertHTML", false, table);
 
   tableСonstructor.classList.toggle('show');
+}
+
+function createCaretPlacer(atStart) {
+  return function(el) {
+      el.focus();
+      if (typeof window.getSelection != "undefined"
+              && typeof document.createRange != "undefined") {
+          var range = document.createRange();
+          range.selectNodeContents(el);
+          range.collapse(atStart);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+      } else if (typeof document.body.createTextRange != "undefined") {
+          var textRange = document.body.createTextRange();
+          textRange.moveToElementText(el);
+          textRange.collapse(atStart);
+          textRange.select();
+      }
+  };
 }
 
 function generatecol6() {
@@ -80,8 +106,7 @@ function generatecol6() {
       <div class="col-6 p-2">
         <p>col 6</p>
       </div>
-    </div> 
-    <p>New line</p>
+    </div>
   `;
   document.execCommand("insertHTML", false, col);
 }
