@@ -1,7 +1,7 @@
 <div class="main-editor-wrap">
-  <div class="editor-head">
+  <div class="editor-head none-blur">
     <div class="head-conatiner">
-      <div class="pos-r" (clickOutside)="showTableConstructor = false"
+      <div class="pos-r none-blur" (clickOutside)="showTableConstructor = false"
         (click)="showTableConstructor = !showTableConstructor">
         <button id="tableBtn" title="Table">
           <i class="fas fa-table"></i>
@@ -9,10 +9,10 @@
         <div [ngClass]="{'show': showTableConstructor}" class="table-constructor">
           <div id="tableСonstructorBody" class="body">
             <div *ngFor="let row of constructorData; let i = index">
-              <div *ngFor="let col of row; let j = index" [id]="'tableСonstructorElement-' + (i + 1) + '-' + (j + 1)"
-                class="item" (click)="generatetable($event)">
+              <button *ngFor="let col of row; let j = index" [id]="'tableСonstructorElement-' + (i + 1) + '-' + (j + 1)"
+                class="item none-blur" (click)="generatetable($event)">
                 <div class="inside"></div>
-              </div>
+              </button>
             </div>
           </div>
           <div class="foot">
@@ -37,34 +37,25 @@
     <div class="head-conatiner">
       <button [ngClass]="{'active': currentFontWeight}" title="Bold" (click)="currentFontWeight = !currentFontWeight"
         onclick="document.execCommand('bold', false, '');">
-        <i class="fas fa-bold"></i>
+        <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+        <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
       </button>
       <button [ngClass]="{'active': currentItalic}" title="Italic" (click)="currentItalic = !currentItalic"
         onclick="document.execCommand('italic', false, '');">
-        <i class="fas fa-italic"></i>
+        <!-- <i class="fas fa-italic"></i> -->
+        <img class="inactive" src="assets/icons/editor-head/inactive/italic.svg" alt="">
+        <img class="active" src="assets/icons/editor-head/active/italic.svg" alt="">
       </button>
       <button [ngClass]="{'active': currentUnderLine}" title="Underline" (click)="currentUnderLine = !currentUnderLine"
         onclick="document.execCommand('underline', false, '');">
         <!--Подчеркивание текста-->
-        <i class="fas fa-underline"></i>
+        <!-- <i class="fas fa-underline"></i> -->
+        <img class="inactive" src="assets/icons/editor-head/inactive/underline.svg" alt="">
+        <img class="active" src="assets/icons/editor-head/active/underline.svg" alt="">
       </button>
-      <button [ngClass]="{'active': currentStrikeThrough}" title="Strike through"
-        (click)="currentStrikeThrough = !currentStrikeThrough"
-        onclick="document.execCommand('strikeThrough', false, ''); ">
-        <!--Зачеркивание текста-->
-        <i class="fas fa-strikethrough"></i>
-      </button>
-    </div>
-    <div class="head-conatiner">
-      <button [ngClass]="{'active': currentSuperscript}" title="Super"
-        (click)="currentSuperscript = !currentSuperscript" onclick="document.execCommand('superscript', false, ''); ">
-        <!--Верхний индекс-->
-        <i class="fas fa-superscript"></i>
-      </button>
-      <button [ngClass]="{'active': currentSubscript}" title="Sub" (click)="currentSubscript = !currentSubscript"
-        onclick="document.execCommand('subscript', false, ''); ">
-        <!--Нижний индекс-->
-        <i class="fas fa-subscript"></i>
+      <button [ngClass]="{'active': showMoreText}" (click)="showMoreText = !showMoreText">
+        <img class="inactive" src="assets/icons/editor-head/inactive/more-text.svg" alt="">
+        <img class="active" src="assets/icons/editor-head/active/more-text.svg" alt="">
       </button>
     </div>
     <div class="head-conatiner">
@@ -72,25 +63,33 @@
         (click)="currentJustifyLeft = !currentJustifyLeft; currentJustifyRight = false; currentJustifyCenter = false; currentJustifyFull = false;"
         onclick="document.execCommand('justifyLeft', false, '');">
         <!--Выравание слева-->
-        <i class="fas fa-align-left"></i>
+        <!-- <i class="fas fa-align-left"></i> -->
+        <img class="inactive" src="assets/icons/editor-head/inactive/align-left.svg" alt="">
+        <img class="active" src="assets/icons/editor-head/active/align-left.svg" alt="">
       </button>
       <button [ngClass]="{'active': currentJustifyRight}" title="Align right"
         (click)="currentJustifyRight = !currentJustifyRight; currentJustifyLeft = false; currentJustifyCenter = false; currentJustifyFull = false;"
         onclick="document.execCommand('justifyRight', false, '');">
         <!--Выравание справа-->
-        <i class="fas fa-align-right"></i>
+        <!-- <i class="fas fa-align-right"></i> -->
+        <img class="inactive" src="assets/icons/editor-head/inactive/align-right.svg" alt="">
+        <img class="active" src="assets/icons/editor-head/active/align-right.svg" alt="">
       </button>
       <button [ngClass]="{'active': currentJustifyCenter}" title="Align center"
         (click)="currentJustifyCenter = !currentJustifyCenter; currentJustifyLeft = false; currentJustifyRight = false; currentJustifyFull = false;"
         onclick="document.execCommand('justifyCenter', false, ''); ">
         <!--Выравание по центру-->
-        <i class="fas fa-align-center"></i>
+        <!-- <i class="fas fa-align-center"></i> -->
+        <img class="inactive" src="assets/icons/editor-head/inactive/align-centre.svg" alt="">
+        <img class="active" src="assets/icons/editor-head/active/align-centre.svg" alt="">
       </button>
       <button [ngClass]="{'active': currentJustifyFull}" title="Align justify"
         (click)="currentJustifyFull = !currentJustifyFull; currentJustifyLeft = false; currentJustifyRight = false; currentJustifyCenter = false;"
         onclick="document.execCommand('justifyFull', false, ''); ">
         <!--Выравание по всей ширине-->
-        <i class="fas fa-align-justify"></i>
+        <!-- <i class="fas fa-align-justify"></i> -->
+        <img class="inactive" src="assets/icons/editor-head/inactive/align-justify.svg" alt="">
+        <img class="active" src="assets/icons/editor-head/active/align-justify.svg" alt="">
       </button>
     </div>
     <!-- <label>Заливка:</label>
@@ -124,11 +123,87 @@
       </select>
     </div>
   </div>
+  <div *ngIf="showMoreText" class="editor-head sub-menu none-blur">
+    <button [ngClass]="{'active': currentStrikeThrough}" title="Strike through"
+      (click)="currentStrikeThrough = !currentStrikeThrough"
+      onclick="document.execCommand('strikeThrough', false, ''); ">
+      <!--Зачеркивание текста-->
+      <!-- <i class="fas fa-strikethrough"></i> -->
+      <svg class="inactive" height="20px">
+        <use xlink:href="assets/icons/editor-head/inactive/strikethrough.svg#strikethrough" />
+      </svg>
+      <svg class="active" height="20px">
+        <use xlink:href="assets/icons/editor-head/active/strikethrough.svg#strikethroughActive" />
+      </svg>
+    </button>
+    <button [ngClass]="{'active': currentSuperscript}" title="Super" (click)="currentSuperscript = !currentSuperscript"
+      onclick="document.execCommand('superscript', false, ''); ">
+      <!--Верхний индекс-->
+      <!-- <i class="fas fa-superscript"></i> -->
+      <img class="inactive" src="assets/icons/editor-head/inactive/superscript.svg" alt="">
+      <img class="active" src="assets/icons/editor-head/active/superscript.svg" alt="">
+    </button>
+    <button [ngClass]="{'active': currentSubscript}" title="Sub" (click)="currentSubscript = !currentSubscript"
+      onclick="document.execCommand('subscript', false, ''); ">
+      <img class="inactive" src="assets/icons/editor-head/inactive/subscript.svg" alt="">
+      <img class="active" src="assets/icons/editor-head/active/subscript.svg" alt="">
+    </button>
+
+    <button [ngClass]="{'active': false}" title="Font family">
+      <svg class="inactive" height="20px">
+        <use xlink:href="assets/icons/editor-head/inactive/font-family.svg#fontFamily" />
+      </svg>
+      <svg class="active" height="20px">
+        <use xlink:href="assets/icons/editor-head/active/font-family.svg#fontFamilyActive" />
+      </svg>
+      <div class="arrow">
+        <img class="inactive" src="assets/icons/editor-head/inactive/path.svg" alt="">
+        <img class="active" src="assets/icons/editor-head/active/path.svg" alt="">
+      </div>
+    </button>
+    <button style="min-width: 50px;" [ngClass]="{'active': false}" title="Font size">
+      <svg class="inactive" height="20px" width="30px">
+        <use xlink:href="assets/icons/editor-head/inactive/font-size.svg#fontSize" />
+      </svg>
+      <svg class="active" height="20px" width="30px">
+        <use xlink:href="assets/icons/editor-head/active/font-size.svg#fontSizeActive" />
+      </svg>
+      <div class="arrow">
+        <img class="inactive" src="assets/icons/editor-head/inactive/path.svg" alt="">
+        <img class="active" src="assets/icons/editor-head/active/path.svg" alt="">
+      </div>
+    </button>
+    <button [ngClass]="{'active': false}" title="Font color">
+      <svg class="inactive" height="20px" width="17px">
+        <use xlink:href="assets/icons/editor-head/inactive/font-color.svg#fontColor" />
+      </svg>
+      <svg class="active" height="20px" width="17px">
+        <use xlink:href="assets/icons/editor-head/active/font-color.svg#fontColorActive" />
+      </svg>
+    </button>
+    <button title="Fill color">
+      <img class="inactive" src="assets/icons/editor-head/inactive/background-color.svg" alt="">
+      <img class="active" src="assets/icons/editor-head/active/background-color.svg" alt="">
+    </button>
+    <button title="Fill color">
+      <svg class="inactive" height="20px" width="17px">
+        <use xlink:href="assets/icons/editor-head/inactive/clear-formatting.svg#clearFormatting" />
+      </svg>
+      <svg class="active" height="20px" width="17px">
+        <use xlink:href="assets/icons/editor-head/active/clear-formatting.svg#clearFormattingActive" />
+      </svg>
+    </button>
+  </div>
 
   <div id="editableContainer" class="editor-wrap" contenteditable="true"></div>
 
-  <div class="save-btn-wrap">
-    <button class="button-primary" (click)="save()">Save</button>
+  <div style="display: flex;">
+    <div class="save-btn-wrap">
+      <button class="button-primary" (click)="save()">Save</button>
+    </div>
+    <div class="save-btn-wrap">
+      <button class="button-primary" (click)="setPos(10)">setPos</button>
+    </div>
   </div>
 
 </div>

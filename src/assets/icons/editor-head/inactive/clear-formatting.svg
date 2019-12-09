@@ -1,0 +1,9 @@
+<svg id="clearFormatting" xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16">
+    <g fill="none" fill-rule="evenodd">
+        <text fill="#000" font-family="Roboto-Regular, Roboto" font-size="20" transform="translate(.805 -2.781)">
+            <tspan x="0" y="21">A</tspan>
+        </text>
+        <path stroke="#333" stroke-linecap="square" stroke-width="2" d="M2 3l11.314 11.314"/>
+        <path stroke="#F5F5F5" stroke-linecap="square" stroke-width="2" d="M3.409 1.61l11.31 11.313"/>
+    </g>
+</svg>

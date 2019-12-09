@@ -1,0 +1,10 @@
+<svg id="fontSize" xmlns="http://www.w3.org/2000/svg" width="24" height="15" viewBox="0 0 24 15">
+    <g fill="#000" fill-rule="evenodd" font-family="Roboto-Regular, Roboto">
+        <text font-size="20" transform="translate(0 -3)">
+            <tspan x="0" y="21">A</tspan>
+        </text>
+        <text font-size="14" transform="translate(0 -3)">
+            <tspan x="15" y="18">A</tspan>
+        </text>
+    </g>
+</svg>

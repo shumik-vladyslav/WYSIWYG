@@ -10,23 +10,37 @@ body {
 }
 
 .editor-head {
-    background: #fafafa;
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
-    border: 1px solid #00000021;
     padding: 5px;
     padding-bottom: 0;
     padding-top: 0;
     position: sticky;
     top: 0;
     z-index: 11;
+    border: solid 1px #dddddd;
+    height: 50px;
+    background-color: #ffffff;
+}
+
+.sub-menu {
+    height: 50px;
+    background-color: #f5f5f5;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px #dddddd;
+    border-top: 0;
+    position: sticky;
+    top: 50px;
 }
 
 .head-conatiner {
     display: flex;
     padding-right: 1px;
-    border-right: 1px solid #00000021;
-    margin-right: 5px;
+    margin-right: 50px;
 }
 
 .head-conatiner:last-child {
@@ -34,7 +48,7 @@ body {
 }
 
 .editor-head button {
-    width: 30px;
+    width: 40px;
     min-width: 30px;
     height: 30px;
     background: none;
@@ -47,6 +61,7 @@ body {
     border: none;
     padding: none;
     border-radius: 4px;
+    color: #333333;
 }
 
 .editor-head label {
@@ -78,20 +93,84 @@ body {
     left: 6px;
 }
 
-.editor-head button:hover {
-    background: #dedede;
+.editor-head label img.active {
+    display: none;
 }
 
-.editor-head label:hover {
-    background: #dedede;
+.editor-head button img.active {
+    display: none;
 }
 
-.editor-head button.active {
-    background: #dedede;
+.editor-head button:hover img.inactive {
+    display: none;
 }
 
-.editor-head label.active {
-    background: #dedede;
+.editor-head button:hover img.active {
+    display: block;
+}
+
+.editor-head label:hover img.inactive {
+    display: none;
+}
+
+.editor-head label:hover img.active {
+    display: block;
+}
+
+.editor-head button.active img.inactive {
+    display: none;
+}
+
+.editor-head label.active img.inactive {
+    display: none;
+}
+
+.editor-head button.active img.active {
+    display: block;
+}
+
+.editor-head label.active img.inactive {
+    display: none;
+}
+
+.editor-head label svg.active {
+    display: none;
+}
+
+.editor-head button svg.active {
+    display: none;
+}
+
+.editor-head button:hover svg.inactive {
+    display: none;
+}
+
+.editor-head button:hover svg.active {
+    display: block;
+}
+
+.editor-head label:hover svg.inactive {
+    display: none;
+}
+
+.editor-head label:hover svg.active {
+    display: block;
+}
+
+.editor-head button.active svg.inactive {
+    display: none;
+}
+
+.editor-head label.active svg.inactive {
+    display: none;
+}
+
+.editor-head button.active svg.active {
+    display: block;
+}
+
+.editor-head label.active svg.inactive {
+    display: none;
 }
 
 .editor-wrap {
@@ -103,16 +182,13 @@ body {
     padding: 10px;
 }
 
-.editor-wrap:focus {
-    box-shadow: inset 0 0 3px #0008ff87;
-}
+.editor-wrap:focus {}
 
-.editor-wrap:hover {
-    box-shadow: inset 0 0 3px #0008ff87;
-}
+.editor-wrap:hover {}
 
 .editor-wrap .row {
     margin: 0;
+    margin-bottom: 10px;
 }
 
 .editor-wrap .col-6 {
@@ -128,9 +204,11 @@ body {
     width: 100%;
     /* float: right; */
 }
-.editor-wrap .col-6 .content{
+
+.editor-wrap .col-6 .content {
     min-height: 50px;
 }
+
 .editor-wrap .col-6 .image {
     width: 100%;
 }
@@ -146,6 +224,7 @@ body {
 .editor-wrap p {
     margin-bottom: 9px;
     line-height: normal;
+    min-height: 10px;
 }
 
 .viewer-wrap p {
@@ -209,6 +288,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    border-radius: 0;
 }
 
 .table-constructor .body .item .inside {
@@ -240,12 +323,12 @@ body {
     position: relative;
 }
 
-.button-primary{
+.button-primary {
     min-width: 160px;
     height: 50px;
     border-radius: 2px;
     background-color: #2196f3;
-    font-family: Roboto,sans-serif;
+    font-family: Roboto, sans-serif;
     font-size: 14px;
     font-weight: 500;
     font-stretch: normal;
@@ -257,16 +340,18 @@ body {
     outline: none;
 }
 
-.table td, .table th{
+.table td,
+.table th {
     border: 1px solid #dee2e6 !important;
 }
-.table{
+
+.table {
     margin-top: 10px;
     margin-bottom: 40px;
     word-break: break-all;
 }
 
-.table:first-child{
+.table:first-child {
     margin-top: 0px;
 }
 

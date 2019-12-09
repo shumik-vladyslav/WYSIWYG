@@ -18,7 +18,12 @@ export class EditorComponent implements OnInit, AfterViewInit {
   editableContainer;
   showTableConstructor;
   html;
-  
+
+  showMoreText;
+  showMoreParagraph;
+  showMoreFormating;
+  showMoreMisc;
+
   currentFontName = 'Roboto, sans-serif';
   currentColour;
   currentFontSize = '3';
@@ -36,12 +41,13 @@ export class EditorComponent implements OnInit, AfterViewInit {
   constructor(private modelService: ModelService, private router: Router, private chRef: ChangeDetectorRef) {
 
   }
-
   ngOnInit() {
 
     let self = this;
 
-    document.onselectionchange = function () {
+    document.onselectionchange = function (event) {
+      // console.log(event, 'eventevent')
+
       let fontName = document.queryCommandValue("fontName");
       let colour = document.queryCommandValue("ForeColor");
       let fontSize = document.queryCommandValue("FontSize");
@@ -70,12 +76,149 @@ export class EditorComponent implements OnInit, AfterViewInit {
       self.currentSuperscript = (superscript === 'true');
       self.currentStrikeThrough = (strikeThrough === 'true');
 
-      console.log(self.currentSubscript);
-      console.log(self.currentSuperscript);
-      console.log(self.currentFontName);
-      
+      self.reportSelection();
+      // console.log(self.currentSubscript);
+      // console.log(self.currentSuperscript);
+      // console.log(self.currentFontName);
+
     }
   }
+
+  getSelectionCharacterOffsetWithin(element) {
+    var start = 0;
+    var end = 0;
+    var doc = element.ownerDocument || element.document;
+    var win = doc.defaultView || doc.parentWindow;
+    var sel;
+    if (typeof win.getSelection != "undefined") {
+      sel = win.getSelection();
+      if (sel.rangeCount > 0) {
+        var range = win.getSelection().getRangeAt(0);
+        var preCaretRange = range.cloneRange();
+        preCaretRange.selectNodeContents(element);
+        preCaretRange.setEnd(range.startContainer, range.startOffset);
+        start = preCaretRange.toString().length;
+        preCaretRange.setEnd(range.endContainer, range.endOffset);
+        end = preCaretRange.toString().length;
+      }
+    } else if ((sel = doc.selection) && sel.type != "Control") {
+      var textRange = sel.createRange();
+      var preCaretTextRange = doc.body.createTextRange();
+      preCaretTextRange.moveToElementText(element);
+      preCaretTextRange.setEndPoint("EndToStart", textRange);
+      start = preCaretTextRange.text.length;
+      preCaretTextRange.setEndPoint("EndToEnd", textRange);
+      end = preCaretTextRange.text.length;
+    }
+    return { start: start, end: end };
+  }
+
+  selOffsetsStart;
+  selOffsetsEnd;
+
+  createRange(node, chars, range?) {
+    if (!range) {
+      range = document.createRange()
+      range.selectNode(node);
+      range.setStart(node, 0);
+    }
+
+    if (chars.count === 0) {
+      range.setEnd(node, chars.count);
+    } else if (node && chars.count > 0) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        if (node.textContent.length < chars.count) {
+          chars.count -= node.textContent.length;
+        } else {
+          range.setEnd(node, chars.count);
+          chars.count = 0;
+        }
+      } else {
+        for (var lp = 0; lp < node.childNodes.length; lp++) {
+          range = this.createRange(node.childNodes[lp], chars, range);
+
+          if (chars.count === 0) {
+            break;
+          }
+        }
+      }
+    }
+
+    return range;
+  };
+
+  reportSelection() {
+    var selOffsets = this.getSelectionCharacterOffsetWithin(document.getElementById("editableContainer"));
+    this.selOffsetsStart = selOffsets.start;
+    this.selOffsetsEnd = selOffsets.end;
+    // console.log(this.selOffsetsStart, 'selOffsetsStart');
+    // console.log(this.selOffsetsEnd, 'selOffsetsEnd');
+
+  }
+
+  setPos(pos) {
+
+    let nodeIndex = 0;
+    let nodeLength = 0;
+    let newPos = pos;
+
+    var tag = document.getElementById("editableContainer");
+
+    // Creates range object 
+    var setpos = document.createRange();
+
+    // Creates object for selection 
+    var set = window.getSelection();
+
+    // Set start position of range 
+    for (let index = 0; index < tag.childNodes.length; index++) {
+      console.log(index, 'index');
+      if (nodeLength + +tag.childNodes[index].textContent.length < pos) {
+        nodeLength += +tag.childNodes[index].textContent.length;
+        newPos -= +tag.childNodes[index].textContent.length;
+      } else {
+        nodeIndex = index;
+        break;
+      }
+    }
+    // tag.childNodes.forEach((element, index) => {
+    //   if (nodeLength + +element.textContent.length < pos) {
+    //     console.log('111111');
+
+    //     nodeLength += +element.textContent.length;
+    //     newPos = -element.textContent.length;
+    //   } else {
+    //     console.log('2222');
+
+    //     nodeIndex = index;
+    //   }
+    // });
+    console.log(nodeLength, 'noneLength');
+    console.log(nodeIndex, 'nodeIndex');
+    console.log(pos, 'pos');
+    console.log(newPos, 'newPos');
+
+    console.log(tag.childNodes[0], 'tag.childNodes[0]');
+    console.log(tag.childNodes[1], 'tag.childNodes[1]');
+    console.log(tag.childNodes, 'tag.childNodes');
+    
+
+    setpos.setStart(tag.childNodes[0], 5);
+
+    // Collapse range within its boundary points 
+    // Returns boolean 
+    setpos.collapse(true);
+
+    // Remove all ranges set 
+    set.removeAllRanges();
+
+    // Add range with respect to range object. 
+    set.addRange(setpos);
+
+    // Set cursor on focus 
+    tag.focus();
+  }
+
 
   ngAfterViewInit() {
     this.html = this.modelService.getHtml();
@@ -140,11 +283,11 @@ export class EditorComponent implements OnInit, AfterViewInit {
         }
       }
     }
-    table += '</table>';
+    table += '</table> <p class="paragraph"></p>';
 
-    this.editableContainer.focus();
+    // this.editableContainer.focus();
 
-    var placeCaretAtStart = this.createCaretPlacer(false);
+    // var placeCaretAtStart = this.createCaretPlacer(false);
 
     document.execCommand("insertHTML", false, table);
     this.showTableConstructor = false;
@@ -185,6 +328,8 @@ export class EditorComponent implements OnInit, AfterViewInit {
         </div>
       </div>
     </div>
+
+    <p class="paragraph"></p>
   `;
     document.execCommand("insertHTML", false, col);
   }
@@ -217,5 +362,4 @@ export class EditorComponent implements OnInit, AfterViewInit {
     this.modelService.setHtml(e.innerHTML);
     this.router.navigate(['view']);
   }
-
 }
