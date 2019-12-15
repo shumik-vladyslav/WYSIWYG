@@ -24,6 +24,181 @@ export class EditorComponent implements OnInit, AfterViewInit {
   showMoreFormating;
   showMoreMisc;
 
+  showDrbFontSize;
+  showDrbFontFamily;
+
+  showDrbFontColor;
+  showDrbFontFill;
+
+  showUnorderedList;
+  showOrderedList;
+
+  showParagraphFormat;
+  showLineHeight;
+
+  fontSizeList = [
+    {
+      lable: '10px',
+      value: 1
+    },
+    {
+      lable: '13px',
+      value: 2
+    },
+    {
+      lable: '16px',
+      value: 3
+    },
+    {
+      lable: '20px',
+      value: 4
+    },
+    {
+      lable: '24px',
+      value: 5
+    },
+    {
+      lable: '32px',
+      value: 6
+    }
+  ];
+  fontFamilyList = [
+    {
+      lable: 'Roboto, sans-serif',
+      value: 'Roboto, sans-serif'
+    },
+    {
+      lable: 'Arial',
+      value: 'Arial'
+    }
+  ];
+  fontColorList = [
+    {
+      value: '#2196f3'
+    },
+    {
+      value: '#f37e21'
+    },
+    {
+      value: '#00c853'
+    },
+    {
+      value: '#ff6b68'
+    },
+    {
+      value: '#f6b45d'
+    },
+    {
+      value: '#175485'
+    },
+    {
+      value: '#000000'
+    },
+    {
+      value: '#333333'
+    },
+    {
+      value: '#666666'
+    },
+    {
+      value: '#999999'
+    },
+    {
+      value: '#dddddd'
+    },
+    {
+      value: '#eeeeee'
+    },
+  ];
+  orderedList = [
+    {
+      lable: 'Default',
+      style: 'list-style: unset'
+    },
+    {
+      lable: 'Lower Alpha',
+      style: 'list-style: lower-alpha'
+    },
+    {
+      lable: 'Lower Greek',
+      style: 'list-style: lower-greek'
+    },
+    {
+      lable: 'Lower Roman',
+      style: 'list-style: lower-roman'
+    },
+    {
+      lable: 'Upper Alpha',
+      style: 'list-style: upper-alpha;'
+    },
+    {
+      lable: 'Upper Roman',
+      style: 'list-style: upper-roman'
+    }
+  ];
+  unorderedList = [
+    {
+      lable: 'Default',
+      style: 'list-style: unset'
+    },
+    {
+      lable: 'Circle',
+      style: 'list-style: circle'
+    },
+    {
+      lable: 'Disc',
+      style: 'list-style: disc'
+    },
+    {
+      lable: 'Square',
+      style: 'list-style: square'
+    }
+  ];
+  paragraphFormatList = [
+    {
+      lable: 'Normal',
+      tag: 'p'
+    },
+    {
+      lable: 'Heading 1 (h1)',
+      tag: 'h1'
+    },
+    {
+      lable: 'Heading 2 (h2)',
+      tag: 'h2'
+    },
+    {
+      lable: 'Heading 3 (h3)',
+      tag: 'h3'
+    },
+    {
+      lable: 'Heading 4 (h4)',
+      tag: 'h4'
+    },
+  ];
+  lineHeightList = [
+    {
+      lable: 'Default',
+      style: 'line-height: normal'
+    },
+    {
+      lable: 'Single',
+      style: 'line-height: 1'
+    },
+    {
+      lable: '1.15',
+      style: 'line-height: 1.15'
+    },
+    {
+      lable: '1.5',
+      style: 'line-height: 1.5'
+    },
+    {
+      lable: 'Double',
+      style: 'line-height: 2'
+    },
+  ];
+
   currentFontName = 'Roboto, sans-serif';
   currentColour;
   currentFontSize = '3';
@@ -37,10 +212,64 @@ export class EditorComponent implements OnInit, AfterViewInit {
   currentSubscript = false;
   currentSuperscript = false;
   currentStrikeThrough = false;
+  currentOrderedList = false;
+  currentUnorderedList = false;
 
   constructor(private modelService: ModelService, private router: Router, private chRef: ChangeDetectorRef) {
 
   }
+
+  setStyleParent(style) {
+    let listId = window.getSelection().focusNode.parentNode.parentNode;
+    $(listId).attr('style', style);
+  }
+  setStyleElement(style) {
+    let listId = window.getSelection().focusNode.parentNode;
+    setTimeout(() => {
+      $(listId).attr('style', style);
+    }, 50);
+  }
+  setClassElement(classElement) {
+    let listId = window.getSelection().focusNode.parentNode;
+      $(listId).addClass(classElement);
+  }
+  setOrderedList() {
+    if (!this.currentOrderedList) {
+      document.execCommand('insertOrderedList', false, null);
+    }
+  }
+  setUnorderedList() {
+    if (!this.currentUnorderedList) {
+      document.execCommand('insertUnorderedList', false, null);
+    }
+  }
+  setTextIndent() {
+    document.execCommand('indent', false, null);
+  }
+  removeTextIndent() {
+    document.execCommand('outdent', false, null);
+  }
+
+  hideDetails() {
+    this.showMoreText = false;
+    this.showMoreParagraph = false;
+    this.showMoreFormating = false;
+    this.showMoreMisc = false;
+  }
+
+  setQuote() {
+    let body = window.getSelection().focusNode.parentNode;
+    let clone = body.cloneNode(true);
+    console.log(clone, 'clone');
+    document.execCommand('insertHTML', false, `<div class="quote">${clone.textContent}</div> <div class="element-space"></div>`);
+  }
+  createLink() {
+    let link = prompt('link name');
+    if (link) {
+      document.execCommand('createLink', false, link);
+    }
+  }
+
   ngOnInit() {
 
     let self = this;
@@ -62,6 +291,9 @@ export class EditorComponent implements OnInit, AfterViewInit {
       let superscript: any = document.queryCommandValue("superscript");
       let strikeThrough: any = document.queryCommandValue("strikeThrough");
 
+      let currentOrderedList: any = document.queryCommandValue("insertOrderedList");
+      let currentUnorderedList: any = document.queryCommandValue("insertUnorderedList");
+
       self.currentFontName = fontName;
       self.currentColour = colour;
       self.currentFontSize = fontSize;
@@ -76,10 +308,12 @@ export class EditorComponent implements OnInit, AfterViewInit {
       self.currentSuperscript = (superscript === 'true');
       self.currentStrikeThrough = (strikeThrough === 'true');
 
+      self.currentOrderedList = (currentOrderedList === 'true');
+      self.currentUnorderedList = (currentUnorderedList === 'true');
+
       self.reportSelection();
       // console.log(self.currentSubscript);
       // console.log(self.currentSuperscript);
-      // console.log(self.currentFontName);
 
     }
   }
@@ -201,7 +435,7 @@ export class EditorComponent implements OnInit, AfterViewInit {
     console.log(tag.childNodes[0], 'tag.childNodes[0]');
     console.log(tag.childNodes[1], 'tag.childNodes[1]');
     console.log(tag.childNodes, 'tag.childNodes');
-    
+
 
     setpos.setStart(tag.childNodes[0], 5);
 
@@ -275,6 +509,15 @@ export class EditorComponent implements OnInit, AfterViewInit {
     let colCount = tArr[2];
 
     for (var i = 1; i <= +colCount; i++) {
+      if (i === 1) {
+        table += '<tr>'
+        for (var j = 1; j <= +rowCount; j++) {
+          table += '<th></th>';
+          if (j === +rowCount) {
+            table += '</tr>';
+          }
+        }
+      }
       table += '<tr>'
       for (var j = 1; j <= +rowCount; j++) {
         table += '<td></td>';
@@ -329,7 +572,7 @@ export class EditorComponent implements OnInit, AfterViewInit {
       </div>
     </div>
 
-    <p class="paragraph"></p>
+    <p class="paragraph element-space"></p>
   `;
     document.execCommand("insertHTML", false, col);
   }

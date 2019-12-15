@@ -48,8 +48,7 @@ body {
 }
 
 .editor-head button {
-    width: 40px;
-    min-width: 30px;
+    min-width: 40px;
     height: 30px;
     background: none;
     outline: none;
@@ -65,8 +64,8 @@ body {
 }
 
 .editor-head label {
-    width: 30px;
-    min-width: 30px;
+    width: 40px;
+    min-width: 40px;
     height: 30px;
     background: none;
     outline: none;
@@ -179,7 +178,7 @@ body {
     width: 100%;
     min-height: calc(100vh - 132px);
     outline: none;
-    padding: 10px;
+    padding: 20px;
 }
 
 .editor-wrap:focus {}
@@ -222,14 +221,21 @@ body {
 }
 
 .editor-wrap p {
-    margin-bottom: 9px;
-    line-height: normal;
-    min-height: 10px;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: #666666;
+    margin-bottom: 15px;
 }
 
 .viewer-wrap p {
-    margin-bottom: 9px;
-    line-height: normal;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: #666666;
+    margin-bottom: 30px;
 }
 
 .viewer-wrap p span {
@@ -345,6 +351,10 @@ body {
     border: 1px solid #dee2e6 !important;
 }
 
+.table th {
+    background-color: #f9f9f9;
+}
+
 .table {
     margin-top: 10px;
     margin-bottom: 40px;
@@ -353,6 +363,86 @@ body {
 
 .table:first-child {
     margin-top: 0px;
+}
+
+.editor-wrap hr {
+    border: solid 1px #999999;
+    margin-bottom: 52px;
+    margin-top: 20px;
+}
+
+.editor-wrap .element-space {
+    line-height: 1;
+    min-height: 10px;
+}
+
+.colored-text {
+    padding: 4px 5px;
+    display: inline-block;
+}
+
+.quote {
+    border-left: solid 2px #2196f3;
+    padding: 12px 9px;
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 1;
+    color: #333333;
+    margin-bottom: 41px;
+}
+
+.viewer-wrap hr {
+    border: solid 1px #999999;
+    margin-bottom: 52px;
+    margin-top: 20px;
+}
+
+.viewer-wrap h1 {
+    font-size: 34px;
+    line-height: 0.88;
+    margin-bottom: 20px;
+}
+
+.editor-wrap h1 {
+    font-size: 34px;
+    line-height: 0.88;
+    margin-bottom: 20px;
+}
+
+.viewer-wrap h2 {
+    font-size: 30px;
+    line-height: 1;
+    margin-bottom: 24px;
+}
+
+.editor-wrap h2 {
+    font-size: 30px;
+    line-height: 1;
+    margin-bottom: 24px;
+}
+
+.viewer-wrap h3 {
+    font-size: 26px;
+    line-height: 1;
+    margin-bottom: 24px;
+}
+
+.editor-wrap h3 {
+    font-size: 26px;
+    line-height: 1;
+    margin-bottom: 24px;
+}
+
+.viewer-wrap h4 {
+    font-size: 20px;
+    line-height: 1;
+    margin-bottom: 24px;
+}
+
+.editor-wrap h4 {
+    font-size: 20px;
+    line-height: 1;
+    margin-bottom: 24px;
 }
 
 select {
@@ -371,6 +461,70 @@ select {
 select::-ms-expand {
     display: none;
     /* remove default arrow on ie10 and ie11 */
+}
+
+
+.drb-wrap {
+    position: relative;
+}
+
+.drb-wrap .default-drb {
+    border-radius: 2px;
+    box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    overflow-y: auto;
+    position: absolute;
+    max-height: 180px;
+    min-width: 80px;
+    width: max-content;
+    top: 45px;
+}
+
+.drb-wrap .default-drb--item {
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: #666666;
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
+    margin: 0 !important;
+    padding: 10px;
+    justify-content: left;
+    border-radius: 0;
+    border-bottom: solid 1px #eeeeee;
+    cursor: pointer;
+}
+
+.drb-wrap .default-drb--item:last-child {
+    border-bottom: none;
+}
+
+.drb-wrap .default-drb--item.active {
+    background-color: #2196f3;
+    color: white;
+}
+
+.drb-wrap .default-drb--item:hover {
+    background-color: #2196f3;
+    color: white;
+}
+
+.drb-wrap .default-drb.colors {
+    width: 206px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.drb-wrap .default-drb.colors .default-drb--item {
+    width: 30px;
+    height: 30px;
+    margin: 0.5px !important;
+    border: none;
 }
 
 /* target Internet Explorer 9 to undo the custom arrow */
