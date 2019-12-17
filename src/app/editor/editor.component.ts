@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { NgIf } from '@angular/common';
 
+declare var YUI;
+
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -35,6 +37,9 @@ export class EditorComponent implements OnInit, AfterViewInit {
 
   showParagraphFormat;
   showLineHeight;
+
+  showEmoji;
+  showSpecialSymbols;
 
   fontSizeList = [
     {
@@ -198,6 +203,23 @@ export class EditorComponent implements OnInit, AfterViewInit {
       style: 'line-height: 2'
     },
   ];
+  specialSymbolstList = [
+    {
+      value: 'Ƣ',
+    },
+    {
+      value: '¥',
+    },
+    {
+      value: '®',
+    },
+    {
+      value: '©',
+    },
+    {
+      value: '¶',
+    },
+  ];
 
   currentFontName = 'Roboto, sans-serif';
   currentColour;
@@ -231,7 +253,7 @@ export class EditorComponent implements OnInit, AfterViewInit {
   }
   setClassElement(classElement) {
     let listId = window.getSelection().focusNode.parentNode;
-      $(listId).addClass(classElement);
+    $(listId).addClass(classElement);
   }
   setOrderedList() {
     if (!this.currentOrderedList) {
@@ -526,7 +548,7 @@ export class EditorComponent implements OnInit, AfterViewInit {
         }
       }
     }
-    table += '</table> <p class="paragraph"></p>';
+    table += '</table> <p class="paragraph element-space"></p>';
 
     // this.editableContainer.focus();
 
@@ -559,35 +581,95 @@ export class EditorComponent implements OnInit, AfterViewInit {
   generatecol6() {
     var col =
       `
-    <div class="row">
-      <div class="col-6 p-0 pr-2">
-        <div class="content">
-          
+        <div class="row" contenteditable="false">
+          <div class="col-6 p-0 pr-2">
+            <div class="content">
+              
+            </div>
+          </div>
+          <div class="col-6 p-0 pl-2">
+            <div class="content">
+                
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-6 p-0 pl-2">
-        <div class="content">
-            
-        </div>
-      </div>
-    </div>
-
-    <p class="paragraph element-space"></p>
-  `;
+    
+        <p class="paragraph element-space"></p>
+        `;
     document.execCommand("insertHTML", false, col);
   }
+
+  imgId="imgId-1";
+  imgContainerId="imgId-1";
 
   readImg(input) {
     if (input.srcElement.files && input.srcElement.files[0]) {
       var reader = new FileReader();
+      let self
       reader.onload = function (e: any) {
-        let img = "<img class='image' src='" + e.target.result + "'>";
+        let img = `
+        <div class="pos-r">
+          <div contenteditable='false' id=${self.imgContainerId} class="img-wrap">
+            <img id=${self.imgId} onclick='document.execCommand("enableObjectResizing", false, true);' class='image' src='` + e.target.result + `'>
+            <div class="img-actions-wrap">
+              <button class="button" title="Replace">
+                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+              </button>
+              <button class="button" title="Align-Right">
+                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+              </button>
+              <button class="button" title="Image name">
+                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+              </button>
+              <button class="button" title="Remove">
+                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+              </button>
+              <button class="button" title="Insert-Link">
+                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+              </button>
+              <button class="button" title="Alternative-Text">
+                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+              </button>
+              <button class="button" title="Change-Size">
+                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+              </button>
+            </div>
+          </div> 
+        </div>
+        <p class='element-space'></p>
+        `;
         document.execCommand("insertHTML", false, img);
       };
       reader.readAsDataURL(input.srcElement.files[0]);
+
+      YUI().use('resize', function (Y) {
+        var resize = new Y.Resize({
+          //Selector of the node to resize
+          node: '#demo'
+        });
+        resize.plug(Y.Plugin.ResizeConstrained, {
+          minHeight: 150,
+          minWidth: 150
+        });
+      });
     }
   }
-
+  setEmoji(e){
+    let body = window.getSelection().focusNode.parentNode;
+    document.execCommand('insertHTML', false, e.emoji.native);
+    this.showEmoji = false;
+  }
+  setSymbol(value){
+    let body = window.getSelection().focusNode.parentNode;
+    document.execCommand('insertHTML', false, value);
+  }
   readVideo(input) {
     if (input.srcElement.files && input.srcElement.files[0]) {
       var reader = new FileReader();

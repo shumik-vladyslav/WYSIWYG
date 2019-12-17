@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@ctrl/ngx-emoji-mart/picker';
+
 body {
     font-family: 'Roboto', sans-serif;
     color: #666666;
@@ -40,14 +42,13 @@ body {
 .head-conatiner {
     display: flex;
     padding-right: 1px;
-    margin-right: 50px;
 }
 
 .head-conatiner:last-child {
     border-right: none;
 }
 
-.editor-head button {
+.editor-head .button {
     min-width: 40px;
     height: 30px;
     background: none;
@@ -63,7 +64,7 @@ body {
     color: #333333;
 }
 
-.editor-head label {
+.editor-head .label {
     width: 40px;
     min-width: 40px;
     height: 30px;
@@ -376,6 +377,48 @@ body {
     min-height: 10px;
 }
 
+.editor-wrap .img-wrap .img-actions-wrap {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 100%;
+    z-index: 11111;
+    padding: 7px;
+    border-radius: 2px;
+    box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    left: 50%;
+    margin-left: -165px;
+}
+.editor-wrap .img-wrap .img-actions-wrap .button {
+    min-width: 40px;
+    height: 30px;
+    background: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    margin-left: 0;
+    border: none;
+    padding: 0;
+    border-radius: 4px;
+    color: #333333;
+}
+
+.editor-wrap .img-wrap .img-actions-wrap .button img.active {
+    display: none;
+}
+
+.editor-wrap .img-wrap .img-actions-wrap .button:hover img.active {
+    display: block;
+}
+.editor-wrap .img-wrap .img-actions-wrap .button:hover img.inactive {
+    display: none;
+}
+
+
+
 .colored-text {
     padding: 4px 5px;
     display: inline-block;
@@ -527,10 +570,123 @@ select::-ms-expand {
     border: none;
 }
 
+.emoji-list {
+    position: absolute;
+    top: 100%;
+}
+
 /* target Internet Explorer 9 to undo the custom arrow */
 @media screen and (min-width:0\0) {
     select {
         background: none\9;
         padding: 5px\9;
     }
+}
+
+
+/* knob handles demo */
+
+.yui3-resize-knob .yui3-resize-handle-tr,
+.yui3-resize-knob .yui3-resize-handle-br,
+.yui3-resize-knob .yui3-resize-handle-tl,
+.yui3-resize-knob .yui3-resize-handle-bl,
+.yui3-resize-knob .yui3-resize-handle-b,
+.yui3-resize-knob .yui3-resize-handle-t,
+.yui3-resize-knob .yui3-resize-handle-l,
+.yui3-resize-knob .yui3-resize-handle-r {
+    border: 1px solid #808080;
+    background-color: #F2F2F2;
+    height: 6px;
+    width: 6px;
+}
+
+.yui3-resize-knob .yui3-resize-handle-b,
+.yui3-resize-knob .yui3-resize-handle-t {
+    left: 45%;
+}
+
+.yui3-resize-knob .yui3-resize-handle-l,
+.yui3-resize-knob .yui3-resize-handle-r {
+    top: 45%;
+}
+
+.yui3-resize-knob .yui3-resize-handle-t,
+.yui3-resize-knob .yui3-resize-handle-tr,
+.yui3-resize-knob .yui3-resize-handle-tl {
+    top: -4px;
+}
+
+.yui3-resize-knob .yui3-resize-handle-b,
+.yui3-resize-knob .yui3-resize-handle-br,
+.yui3-resize-knob .yui3-resize-handle-bl {
+    bottom: -4px;
+}
+
+.yui3-resize-knob .yui3-resize-handle-l,
+.yui3-resize-knob .yui3-resize-handle-bl,
+.yui3-resize-knob .yui3-resize-handle-tl {
+    left: -4px;
+}
+
+.yui3-resize-knob .yui3-resize-handle-r,
+.yui3-resize-knob .yui3-resize-handle-br,
+.yui3-resize-knob .yui3-resize-handle-tr {
+    right: -4px;
+}
+
+.yui3-resize-knob .yui3-resize-handle-inner {
+    background: none;
+    height: 6px;
+    width: 6px;
+}
+.yui3-resize-handle-inner{
+    display: none;
+}
+.yui3-resize-handle-tl{
+    width: 10px;
+    height: 10px;
+    border: solid 2px #ffffff;
+    background-color: #2196f3;
+    top: -4px;
+    left: -4px;
+}
+.yui3-resize-handle-bl{
+    width: 10px;
+    height: 10px;
+    border: solid 2px #ffffff;
+    background-color: #2196f3;
+    bottom: -4px;
+    left: -4px;
+}
+.yui3-resize-handle-br{
+    width: 10px;
+    height: 10px;
+    border: solid 2px #ffffff;
+    background-color: #2196f3;
+    bottom: -4px;
+    right: -4px;
+}
+.yui3-resize-handle-tr{
+    width: 10px;
+    height: 10px;
+    border: solid 2px #ffffff;
+    background-color: #2196f3;
+    top: -4px;
+    right: -4px;
+}
+.yui3-resize-handle-l{
+    background: #2196f3;
+    width: 2px;
+}
+.yui3-resize-handle-b{
+    background: #2196f3;
+    height: 2px;
+}
+.yui3-resize-handle-r{
+    background: #2196f3;
+    width: 2px;
+}
+.yui3-resize-handle-t{
+    background: #2196f3;
+    height: 2px;
 }

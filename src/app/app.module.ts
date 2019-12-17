@@ -8,6 +8,8 @@ import { EditorComponent } from './editor/editor.component';
 import { EditorViewComponent } from './editor-view/editor-view.component';
 import { ModelService } from './editor/editor.service';
 import { ClickOutsideDirective } from './shared/click-outside.directive';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { ClickOutsideDirective } from './shared/click-outside.directive';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    PickerModule,
+    EmojiModule
   ],
   providers: [ModelService],
   bootstrap: [AppComponent]
