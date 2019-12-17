@@ -581,7 +581,7 @@ export class EditorComponent implements OnInit, AfterViewInit {
   generatecol6() {
     var col =
       `
-        <div class="row" contenteditable="false">
+        <div class="row">
           <div class="col-6 p-0 pr-2">
             <div class="content">
               
@@ -599,49 +599,30 @@ export class EditorComponent implements OnInit, AfterViewInit {
     document.execCommand("insertHTML", false, col);
   }
 
-  imgId="imgId-1";
-  imgContainerId="imgId-1";
+  imgContainerId = 'imgContainerId-';
+
+  imageOptions(ev) {
+    let body = window.getSelection().focusNode.parentNode;
+    console.log(body, 'body');
+  
+    let clone = ev.srcElement.cloneNode(true);
+
+    ev.srcElement.offsetParent.remove();
+    // ev.srcElement.remove();
+    body.append(clone)
+    
+    // document.execCommand('insertHTML', false, clone);
+  }
 
   readImg(input) {
     if (input.srcElement.files && input.srcElement.files[0]) {
       var reader = new FileReader();
-      let self
+      let self = this;
+      let id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
       reader.onload = function (e: any) {
         let img = `
-        <div class="pos-r">
-          <div contenteditable='false' id=${self.imgContainerId} class="img-wrap">
-            <img id=${self.imgId} onclick='document.execCommand("enableObjectResizing", false, true);' class='image' src='` + e.target.result + `'>
-            <div class="img-actions-wrap">
-              <button class="button" title="Replace">
-                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
-                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
-              </button>
-              <button class="button" title="Align-Right">
-                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
-                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
-              </button>
-              <button class="button" title="Image name">
-                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
-                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
-              </button>
-              <button class="button" title="Remove">
-                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
-                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
-              </button>
-              <button class="button" title="Insert-Link">
-                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
-                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
-              </button>
-              <button class="button" title="Alternative-Text">
-                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
-                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
-              </button>
-              <button class="button" title="Change-Size">
-                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
-                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
-              </button>
-            </div>
-          </div> 
+        <div id='${self.imgContainerId + id}' class="img-wrap img-container">
+          <img class='image img' src='` + e.target.result + `'>
         </div>
         <p class='element-space'></p>
         `;
@@ -649,24 +630,36 @@ export class EditorComponent implements OnInit, AfterViewInit {
       };
       reader.readAsDataURL(input.srcElement.files[0]);
 
-      YUI().use('resize', function (Y) {
-        var resize = new Y.Resize({
-          //Selector of the node to resize
-          node: '#demo'
-        });
-        resize.plug(Y.Plugin.ResizeConstrained, {
-          minHeight: 150,
-          minWidth: 150
-        });
-      });
+      let interval = setInterval(() => {
+        if (document.getElementById(self.imgContainerId + id)) {
+          document.getElementById(self.imgContainerId + id).addEventListener('click', (event) => {
+            this.imageOptions(event);
+          });
+          clearInterval(interval);
+        }
+      }, 300);
+
+      //   YUI().use('overlay', 'resize-plugin', function(Y) {
+      //     var overlay = new Y.Overlay({
+      //       srcNode: '#' + self.imgContainerId + id
+      //    });
+      //     overlay.plug(Y.Plugin.Resize);
+      //     overlay.render();
+
+      //     overlay.resize.on('resize:resize', function(event) {
+      //      console.log(event, 'sadsad');
+
+      //     });
+      // });
+
     }
   }
-  setEmoji(e){
+  setEmoji(e) {
     let body = window.getSelection().focusNode.parentNode;
     document.execCommand('insertHTML', false, e.emoji.native);
     this.showEmoji = false;
   }
-  setSymbol(value){
+  setSymbol(value) {
     let body = window.getSelection().focusNode.parentNode;
     document.execCommand('insertHTML', false, value);
   }
