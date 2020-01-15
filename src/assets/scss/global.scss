@@ -329,6 +329,7 @@ body {
 
 .pos-r {
     position: relative;
+    z-index: 1img-actions-wrap;
 }
 
 .button-primary {
@@ -389,8 +390,9 @@ body {
     box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     left: 50%;
-    margin-left: -165px;
+    margin-left: -186px;
 }
+
 .editor-wrap .img-wrap .img-actions-wrap .button {
     min-width: 40px;
     height: 30px;
@@ -407,6 +409,69 @@ body {
     color: #333333;
 }
 
+.editor-wrap .img-wrap .img-actions-wrap .button .arrow {
+    display: flex;
+    align-items: center;
+    position: relative;
+    left: 4px;
+}
+
+.editor-wrap .img-wrap .img-actions-wrap .focus-drb {
+    border-radius: 2px;
+    box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    overflow-y: auto;
+    position: absolute;
+    max-height: 180px;
+    min-width: 80px;
+    width: max-content;
+    top: 39px;
+    display: none;
+    z-index: 111;
+    left: 0;
+}
+
+.editor-wrap .img-wrap .img-actions-wrap .hover-drb-wrap:hover .focus-drb {
+    display: block;
+}
+
+.editor-wrap .img-wrap .img-actions-wrap .focus-drb .default-drb--item {
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: #666666;
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
+    margin: 0 !important;
+    padding: 10px;
+    justify-content: left;
+    border-radius: 0;
+    border: none;
+    border-bottom: solid 1px #eeeeee;
+    cursor: pointer;
+    background: white;
+    text-align: left;
+    z-index: 111;
+}
+
+.editor-wrap .img-wrap .img-actions-wrap .focus-drb .default-drb--item:last-child {
+    border-bottom: none;
+}
+
+.editor-wrap .img-wrap .img-actions-wrap .focus-drb .default-drb--item.active {
+    background-color: #2196f3;
+    color: white;
+}
+
+.editor-wrap .img-wrap .img-actions-wrap .focus-drb .default-drb--item:hover {
+    background-color: #2196f3;
+    color: white;
+}
+
 .editor-wrap .img-wrap .img-actions-wrap .button img.active {
     display: none;
 }
@@ -414,6 +479,7 @@ body {
 .editor-wrap .img-wrap .img-actions-wrap .button:hover img.active {
     display: block;
 }
+
 .editor-wrap .img-wrap .img-actions-wrap .button:hover img.inactive {
     display: none;
 }
@@ -640,10 +706,12 @@ select::-ms-expand {
     height: 6px;
     width: 6px;
 }
-.yui3-resize-handle-inner{
+
+.yui3-resize-handle-inner {
     display: none;
 }
-.yui3-resize-handle-tl{
+
+.yui3-resize-handle-tl {
     width: 10px;
     height: 10px;
     border: solid 2px #ffffff;
@@ -651,7 +719,8 @@ select::-ms-expand {
     top: -4px;
     left: -4px;
 }
-.yui3-resize-handle-bl{
+
+.yui3-resize-handle-bl {
     width: 10px;
     height: 10px;
     border: solid 2px #ffffff;
@@ -659,7 +728,8 @@ select::-ms-expand {
     bottom: -4px;
     left: -4px;
 }
-.yui3-resize-handle-br{
+
+.yui3-resize-handle-br {
     width: 10px;
     height: 10px;
     border: solid 2px #ffffff;
@@ -667,7 +737,8 @@ select::-ms-expand {
     bottom: -4px;
     right: -4px;
 }
-.yui3-resize-handle-tr{
+
+.yui3-resize-handle-tr {
     width: 10px;
     height: 10px;
     border: solid 2px #ffffff;
@@ -675,33 +746,39 @@ select::-ms-expand {
     top: -4px;
     right: -4px;
 }
-.yui3-resize-handle-l{
+
+.yui3-resize-handle-l {
     background: #2196f3;
     width: 2px;
 }
-.yui3-resize-handle-b{
+
+.yui3-resize-handle-b {
     background: #2196f3;
     height: 2px;
 }
-.yui3-resize-handle-r{
+
+.yui3-resize-handle-r {
     background: #2196f3;
     width: 2px;
 }
-.yui3-resize-handle-t{
+
+.yui3-resize-handle-t {
     background: #2196f3;
     height: 2px;
 }
 
 .img {
-	display: block;
+    display: block;
 }
 
 .img-container {
-	position: relative;
-	height: 100%;
-	max-width: 100%;
+    position: relative;
+    height: 100%;
+    max-width: 100%;
 }
-.yui3-resize, .yui3-resize-wrapper{
+
+.yui3-resize,
+.yui3-resize-wrapper {
     position: relative !important;
     top: 0 !important;
     left: unset !important;
@@ -709,4 +786,26 @@ select::-ms-expand {
     max-width: 100%;
     min-width: 100px;
     min-height: 100px;
+}
+
+.df {
+    display: flex;
+}
+
+.max-full {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.img-name {
+    outline: none;
+}
+.row-reverse{
+    flex-flow: row-reverse;
+}
+.editor-wrap .img-link {
+    pointer-events: none;
+}
+.yui3-resize{
+    z-index: 11111;
 }

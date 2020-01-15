@@ -600,31 +600,300 @@ export class EditorComponent implements OnInit, AfterViewInit {
   }
 
   imgContainerId = 'imgContainerId-';
+  imgEditFlag = {};
+  resizeNone = true;
 
-  imageOptions(ev) {
+  imageOptions(el, imgId) {
     let body = window.getSelection().focusNode.parentNode;
-    console.log(body, 'body');
-  
-    let clone = ev.srcElement.cloneNode(true);
+    let clone = el.firstElementChild.cloneNode(true);
+    let clone2 = el.cloneNode(true);
+    console.log(clone2, 'cesdzasdasdasda');
 
-    ev.srcElement.offsetParent.remove();
-    // ev.srcElement.remove();
-    body.append(clone)
-    
+    // console.log(body, 'body');
+    // console.log(el.firstElementChild);
+    el.firstElementChild.remove();
+
+    let id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
+    let self = this;
+
+    clone.style.width = "100%";
+    clone.style.height = "100%";
+
+    let newElement = `
+    <div class="pos-r" contenteditable='false'>
+        <div id='${this.imgContainerId + id}' class="img-wrap df img-container">
+          ${clone.outerHTML}
+          <div class="img-actions-wrap">
+            <button id='${this.imgContainerId + id + '-replace'}' class="button" title="Replace">
+              <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+              <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+            </button>
+            <div class="pos-r hover-drb-wrap">
+              <button class="button" title="Align">
+                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+                <div class="arrow">
+                  <img class="inactive" src="assets/icons/editor-head/inactive/path.svg" alt="">
+                  <img class="active" src="assets/icons/editor-head/active/path.svg" alt="">
+                </div>
+              </button>
+              <div class="focus-drb">
+                <button id='${this.imgContainerId + id + '-align-left'}' class="default-drb--item">
+                  Left
+                </button>
+                <button id='${this.imgContainerId + id + '-align-center'}' class="default-drb--item">
+                  Center
+                </button>
+                <button id='${this.imgContainerId + id + '-align-right'}' class="default-drb--item">
+                  Right
+                </button>
+              </div>
+            </div>
+            <button id='${this.imgContainerId + id + '-img-name'}' class="button" title="Image name">
+              <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+              <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+            </button>
+            <button id='${this.imgContainerId + id + '-delete'}' class="button" title="Remove">
+              <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+              <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+            </button>
+            <button id='${this.imgContainerId + id + '-link'}' class="button" title="Insert-Link">
+              <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+              <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+            </button>
+            <div class="pos-r hover-drb-wrap">
+              <button class="button" title="Display">
+                <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+                <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+                <div class="arrow">
+                  <img class="inactive" src="assets/icons/editor-head/inactive/path.svg" alt="">
+                  <img class="active" src="assets/icons/editor-head/active/path.svg" alt="">
+                </div>
+              </button>
+              <div class="focus-drb">
+                <button class="default-drb--item">
+                  drb--item
+                </button>
+              </div>
+            </div>
+            <button id='${this.imgContainerId + id + '-alt'}' class="button" title="Alternative-Text">
+              <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+              <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+            </button>
+            <button class="button" title="Change-Size">
+              <img class="inactive" src="assets/icons/editor-head/inactive/bold.svg" alt="">
+              <img class="active" src="assets/icons/editor-head/active/bold.svg" alt="">
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    console.log(clone);
+    el.innerHTML = newElement;
+
+    YUI().use('overlay', 'resize-plugin', function (Y) {
+      console.log(self.imgEditFlag, 'self.imgEditFlag[imgId]self.imgEditFlag[imgId]');
+
+      let width = self.imgEditFlag[imgId].width ? self.imgEditFlag[imgId].width + "px" : "unset";
+      let height = self.imgEditFlag[imgId].height ? self.imgEditFlag[imgId].height + "px" : "unset";
+
+      if (0 < self.imgEditFlag[imgId].width && 100 > self.imgEditFlag[imgId].width)
+        width = "100px"
+      if (0 < self.imgEditFlag[imgId].height && 100 > self.imgEditFlag[imgId].height)
+        height = "100px"
+
+      console.log(height);
+      console.log(width);
+
+      var overlay = new Y.Overlay({
+        srcNode: '#' + self.imgContainerId + id,
+        width: width,
+        height: height,
+      });
+      overlay.plug(Y.Plugin.Resize);
+      overlay.render();
+
+      overlay.resize.on('resize:resize', function (event) {
+        console.log('resize:resize');
+      });
+
+      overlay.resize.on('resize:start', function (event) {
+        console.log('resize:start');
+      });
+
+      overlay.resize.on('resize:end', function (event) {
+
+        self.imgEditFlag[imgId].width = event.info.offsetWidth;
+        self.imgEditFlag[imgId].height = event.info.offsetHeight;
+
+        console.log('resize:end');
+      });
+      overlay.resize.on('resize:align', function (event) {
+        console.log('resize:align');
+      });
+      overlay.resize.on('resize:mouseUp', function (event) {
+        console.log('resize:mouseUp');
+        self.resizeNone = false;
+        setTimeout(() => {
+          self.resizeNone = true;
+        }, 200);
+      });
+
+    });
+
+    let interval = setInterval(() => {
+      if (document.getElementById(self.imgContainerId + id)) {
+
+        document.getElementById(self.imgContainerId + id + '-align-left').addEventListener('click', function (this, event) {
+          self.alignImgLeft(el);
+        });
+
+        document.getElementById(self.imgContainerId + id + '-align-center').addEventListener('click', function (this, event) {
+          self.alignImgCenter(el);
+        });
+
+        document.getElementById(self.imgContainerId + id + '-align-right').addEventListener('click', function (this, event) {
+          self.alignImgRight(el);
+        });
+
+        document.getElementById(self.imgContainerId + id + '-img-name').addEventListener('click', function (this, event) {
+          self.setImgName(el, imgId);
+        });
+        document.getElementById(self.imgContainerId + id + '-delete').addEventListener('click', function (this, event) {
+          self.setImgDelete(el, imgId);
+        });
+        document.getElementById(self.imgContainerId + id + '-alt').addEventListener('click', function (this, event) {
+          self.setImgAlt(el, imgId);
+        });
+        document.getElementById(self.imgContainerId + id + '-link').addEventListener('click', function (this, event) {
+          self.setImgLink(el, imgId);
+        });
+        document.getElementById(self.imgContainerId + id + '-replace').addEventListener('click', function (this, event) {
+          self.setImgReplace(document.getElementById(imgId).parentElement);
+        });
+
+        clearInterval(interval);
+      }
+    }, 300);
+
+    // document.execCommand('insertHTML', false, clone);
+  }
+  alignImgLeft(el) {
+    el.style = 'justify-content: flex-start;'
+  }
+  alignImgCenter(el) {
+    el.style = 'justify-content: center;'
+  }
+  alignImgRight(el) {
+    el.style = 'justify-content: flex-end;'
+  }
+  setImgName(el, imgId) {
+    let name = prompt("Your image name", '');
+    if (name) {
+      this.imageOutEdit(imgId);
+      this.imgEditFlag[imgId].flag = false;
+
+      this.imgEditFlag[imgId].targetEl.firstElementChild.querySelectorAll('.img-name')[0].innerHTML = name;
+      let clone = this.imgEditFlag[imgId].targetEl.firstElementChild.querySelectorAll('.img-name')[0].cloneNode(true)
+      
+      document.getElementById(imgId).firstElementChild.remove();
+      document.getElementById(imgId).innerHTML = this.imgEditFlag[imgId].targetEl.firstElementChild.outerHTML;
+      setTimeout(() => {
+        console.log(document.getElementById(imgId).offsetHeight);
+        console.log(document.getElementById(imgId));
+      }, 2000);
+      // el.firstElementChild.innerHTML = html + el.firstElementChild.innerHTML
+    }
+  }
+  setImgAlt(el, imgId) {
+    let name = prompt("Your alternative image name", '');
+    if (name) {
+      this.imageOutEdit(imgId);
+      this.imgEditFlag[imgId].flag = false;
+
+      this.imgEditFlag[imgId].targetEl.firstElementChild.querySelectorAll('a')[0].firstElementChild.setAttribute("alt", name)
+      document.getElementById(imgId).firstElementChild.remove();
+      document.getElementById(imgId).innerHTML = this.imgEditFlag[imgId].targetEl.firstElementChild.outerHTML;
+      // el.firstElementChild.innerHTML = html + el.firstElementChild.innerHTML
+    }
+  }
+  setImgLink(el, imgId) {
+    let name = prompt("Your link", '');
+    if (name) {
+      this.imageOutEdit(imgId);
+      this.imgEditFlag[imgId].flag = false;
+
+      this.imgEditFlag[imgId].targetEl.firstElementChild.querySelectorAll('a')[0].setAttribute("href", name)
+      document.getElementById(imgId).firstElementChild.remove();
+      document.getElementById(imgId).innerHTML = this.imgEditFlag[imgId].targetEl.firstElementChild.outerHTML;
+      // el.firstElementChild.innerHTML = html + el.firstElementChild.innerHTML
+    }
+  }
+  setImgDelete(el, imgId) {
+    document.getElementById(imgId).remove();
+    // el.firstElementChild.innerHTML = html + el.firstElementChild.innerHTML
+  }
+  setImgReplace(parent) {
+    if (parent) {
+      if (parent.querySelectorAll('.row')[0]) {
+        console.log(parent);
+        parent.querySelectorAll('.row')[0].classList.toggle("row-reverse")
+      } else {
+        this.setImgReplace(parent.parentElement)
+      }
+    } else {
+      console.log('cerff');
+    }
+
+    // el.firstElementChild.innerHTML = html + el.firstElementChild.innerHTML
+  }
+  imageOutEdit(imgId) {
+
+    console.log(document.getElementById(imgId));
+    console.log(imgId);
+    console.log(this.imgEditFlag[imgId].targetEl);
+    if (imgId && document.getElementById(imgId) && document.getElementById(imgId).firstElementChild) {
+      document.getElementById(imgId).firstElementChild.remove();
+      document.getElementById(imgId).innerHTML = this.imgEditFlag[imgId].targetEl.firstElementChild.outerHTML;
+
+      console.log(this.imgEditFlag[imgId]);
+
+      let img = document.getElementById(imgId).firstElementChild as HTMLElement;
+      console.log(img);
+      console.log(this.imgEditFlag[imgId].width);
+      console.log(this.imgEditFlag[imgId].height);
+      let width = this.imgEditFlag[imgId].width ? this.imgEditFlag[imgId].width + "px" : "100%";
+      let height = this.imgEditFlag[imgId].height ? this.imgEditFlag[imgId].height + "px" : "100%";
+
+      if (0 < this.imgEditFlag[imgId].width && 100 > this.imgEditFlag[imgId].width)
+        width = "100px";
+      if (0 < this.imgEditFlag[imgId].height && 100 > this.imgEditFlag[imgId].height)
+        height = "100px";
+
+      img.style.width = width;
+      img.style.height = height;
+    }
     // document.execCommand('insertHTML', false, clone);
   }
 
   readImg(input) {
     if (input.srcElement.files && input.srcElement.files[0]) {
       var reader = new FileReader();
-      let self = this;
       let id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
+      let self = this;
       reader.onload = function (e: any) {
         let img = `
-        <div id='${self.imgContainerId + id}' class="img-wrap img-container">
-          <img class='image img' src='` + e.target.result + `'>
+        <div id='${self.imgContainerId + id}' class="img-wrap df img-container" contenteditable="false">
+          <div class='pos-r max-full'>
+            <div class="img-name" contenteditable="true"></div>
+            <a class="img-link">
+              <img class='image img' src='` + e.target.result + `'>
+            </a>
+          </div>
         </div>
         <p class='element-space'></p>
+        <div class='element-space'></div>
         `;
         document.execCommand("insertHTML", false, img);
       };
@@ -632,25 +901,35 @@ export class EditorComponent implements OnInit, AfterViewInit {
 
       let interval = setInterval(() => {
         if (document.getElementById(self.imgContainerId + id)) {
-          document.getElementById(self.imgContainerId + id).addEventListener('click', (event) => {
-            this.imageOptions(event);
+          document.getElementById(self.imgContainerId + id).addEventListener('click', function (this, event) {
+            event.stopPropagation();
+            if (!self.imgEditFlag[self.imgContainerId + id] || (self.imgEditFlag[self.imgContainerId + id] && !self.imgEditFlag[self.imgContainerId + id].flag)) {
+              let clone = this.cloneNode(true);
+              if (self.imgEditFlag[self.imgContainerId + id]) {
+                self.imgEditFlag[self.imgContainerId + id].flag = true;
+                self.imgEditFlag[self.imgContainerId + id].targetEl = clone;
+              } else {
+                self.imgEditFlag[self.imgContainerId + id] = {
+                  flag: true,
+                  targetEl: clone,
+                  width: 0,
+                  height: 0
+                };
+              }
+              self.imageOptions(this, self.imgContainerId + id);
+              console.log(111);
+            }
+            $(window).click(function () {
+              if (self.resizeNone && self.imgEditFlag[self.imgContainerId + id].flag) {
+                console.log(222);
+                self.imageOutEdit(self.imgContainerId + id);
+                self.imgEditFlag[self.imgContainerId + id].flag = false;
+              }
+            });
           });
           clearInterval(interval);
         }
       }, 300);
-
-      //   YUI().use('overlay', 'resize-plugin', function(Y) {
-      //     var overlay = new Y.Overlay({
-      //       srcNode: '#' + self.imgContainerId + id
-      //    });
-      //     overlay.plug(Y.Plugin.Resize);
-      //     overlay.render();
-
-      //     overlay.resize.on('resize:resize', function(event) {
-      //      console.log(event, 'sadsad');
-
-      //     });
-      // });
 
     }
   }
